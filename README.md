@@ -2,6 +2,8 @@
 
 This parser accepts [JsonLogic](http://jsonlogic.com) rules and executes them in Python.
 
+This is a fork of the [nadirizr](https://github.com/nadirizr/json-logic-py), adding the possibility for dealing with operations with list of objects, instead of only arrays.
+
 This is a Python porting of the excellent GitHub project by [jwadhams](https://github.com/jwadhams) for JavaScript: [json-logic-js](https://github.com/jwadhams/json-logic-js).
 
 All credit goes to him, this is simply an implementation of the same logic in Python (small differences below).

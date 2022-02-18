@@ -102,16 +102,22 @@ def get_var(data, var_name, not_found=None):
     """Gets variable value from data dictionary."""
     try:
         for key in str(var_name).split('.'):
-            try:
-                data = data[key]
-            except TypeError:
-                data = data[int(key)]
+            if key=="*" and isinstance(a_list, list):
+                try:
+                    data = [a[key] for a in data]
+                except TypeError:
+                    pass
+            else:
+                try:
+                    data = data[key]
+                except TypeError:
+                    data = data[int(key)]
     except (KeyError, TypeError, ValueError):
         return not_found
     else:
         return data
-
-
+    
+    
 def missing(data, *args):
     """Implements the missing operator for finding missing variables."""
     not_found = object()

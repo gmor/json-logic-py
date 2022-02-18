@@ -102,7 +102,7 @@ def get_var(data, var_name, not_found=None):
     """Gets variable value from data dictionary."""
     try:
         for key in str(var_name).split('.'):
-            if key=="*" and isinstance(a_list, list):
+            if key=="*" and isinstance(data, list):
                 try:
                     data = [a[key] for a in data]
                 except TypeError:

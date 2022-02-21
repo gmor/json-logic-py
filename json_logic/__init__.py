@@ -209,5 +209,5 @@ def jsonLogic(tests, data=None):
 
     if operator not in operations:
         raise ValueError("Unrecognized operation %s" % operator)
-
+    print(*values)
     return operations[operator](*values)

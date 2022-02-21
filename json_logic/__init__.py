@@ -213,6 +213,8 @@ def jsonLogic(tests, data=None):
     
     try:
         if isinstance(*values, list):
-            return operations[operator](*np.concatenate(values))
+            values = np.concatenate(values)
+    except:
+        pass
     
     return operations[operator](*values)

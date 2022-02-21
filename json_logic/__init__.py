@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 import sys
 from six.moves import reduce
 import logging
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -209,5 +210,9 @@ def jsonLogic(tests, data=None):
 
     if operator not in operations:
         raise ValueError("Unrecognized operation %s" % operator)
-    print(*values)
+    
+    try:
+        if isinstance(*values, list):
+            return operations[operator](*np.concatenate(values))
+    
     return operations[operator](*values)

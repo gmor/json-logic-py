@@ -101,15 +101,19 @@ def merge(*args):
 def get_var(data, var_name, not_found=None):
     """Gets variable value from data dictionary."""
     try:
+        key_search = False
         for key in str(var_name).split('.'):
-            if key=="*" and isinstance(data, list):
-                try:
-                    data = [a[key] for a in data]
-                except TypeError:
-                    pass
+            if key=="*":
+                key_search = True
+                continue
+            # Get subfields inside a list of dictionaries
+            if isinstance(data, list) and key_search:
+                data = [a[key] for a in data]
+                key_search = False
+            # Get elements of a dict or an array 
             else:
                 try:
-                    data = data[key]
+                    data = data[key]  
                 except TypeError:
                     data = data[int(key)]
     except (KeyError, TypeError, ValueError):

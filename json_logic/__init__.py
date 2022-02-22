@@ -199,7 +199,7 @@ operations = {
     "any": lambda *args: np.any(args),
     "all": lambda *args: np.all(args),
     "count": lambda *args: sum(1 if a else 0 for a in args),
-    "filter": lambda a, b: auto_unbox(list(np.array(a,dtype=object) & np.array(b,dtype=object)))
+    "filter": lambda a, b: auto_unbox(list(np.array(a,dtype=object)[np.array(b)]))
 }
 
 

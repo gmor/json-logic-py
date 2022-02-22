@@ -152,6 +152,11 @@ def missing_some(data, min_required, args):
                 return []
     return ret
 
+def auto_unbox(l):
+    if len(l)==1:
+        return l[0]
+    else:
+        return l
 
 operations = {
     "==": soft_equals,
@@ -170,7 +175,7 @@ operations = {
     "?:": lambda a, b, c: b if a else c,
     "if": if_,
     "log": lambda a: logger.info(a) or a,
-    "in": lambda a, b: list(np.isin(a,b)), #a in b if "__contains__" in dir(b) else False,
+    "in": lambda a, b: auto_unbox(list(np.isin(a,b))), #a in b if "__contains__" in dir(b) else False,
     "cat": lambda *args: "".join(str(arg) for arg in args),
     "+": plus,
     "*": lambda *args: reduce(lambda total, arg: total * float(arg), args, 1),

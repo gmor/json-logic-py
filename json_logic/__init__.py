@@ -162,7 +162,7 @@ def to_list(e):
     if isinstance(e,list):
         return e
     else: 
-        return [e]
+        return 
     
 operations = {
     "==": soft_equals,
@@ -190,8 +190,8 @@ operations = {
     "min": lambda *args: min(args),
     "max": lambda *args: max(args),
     "merge": merge,
-    "any": np.any,
-    "all": np.all,
+    "any": lambda *args: np.any(args),
+    "all": lambda *args: np.all(args),
     "count": lambda *args: sum(1 if a else 0 for a in args),
 }
 

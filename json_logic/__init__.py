@@ -230,7 +230,7 @@ def jsonLogic(tests, data=None):
     if operator == 'var':
         return get_var(data, *values)
     if operator == 'filter':
-        return filter_(data, *values)
+        return filter_(data, values)
     if operator == 'missing':
         return missing(data, *values)
     if operator == 'missing_some':

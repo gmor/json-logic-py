@@ -110,7 +110,7 @@ def get_var(data, var_name, not_found=None):
                 continue
             # Get subfields inside a list of dictionaries
             if isinstance(data, list) and key_search:
-                data = [a[key] for a in data]
+                data = [a[key] if key in a else None for a in data]
                 key_search = False
             # Get elements of a dict or an array 
             else:

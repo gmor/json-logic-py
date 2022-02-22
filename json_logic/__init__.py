@@ -170,7 +170,7 @@ operations = {
     "?:": lambda a, b, c: b if a else c,
     "if": if_,
     "log": lambda a: logger.info(a) or a,
-    "in": lambda a, b: a in b if "__contains__" in dir(b) else False,
+    "in": lambda a, b: list(np.isin(a,b)) #a in b if "__contains__" in dir(b) else False,
     "cat": lambda *args: "".join(str(arg) for arg in args),
     "+": plus,
     "*": lambda *args: reduce(lambda total, arg: total * float(arg), args, 1),
@@ -179,6 +179,8 @@ operations = {
     "min": lambda *args: min(args),
     "max": lambda *args: max(args),
     "merge": merge,
+    "any": np.any,
+    "all": np.all,
     "count": lambda *args: sum(1 if a else 0 for a in args),
 }
 

@@ -162,7 +162,7 @@ def to_list(e):
     if isinstance(e,list):
         return e
     else: 
-        return 
+        return [e]
     
 operations = {
     "==": soft_equals,

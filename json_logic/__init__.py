@@ -163,25 +163,31 @@ def to_list(e):
         return e
     else: 
         return [e]
+
+def check_type(e):
+    if isinstance(e,list):
+        return [str(type(a)) for a in e]
+    else: 
+        return str(type(e))
     
 operations = {
-    "==": soft_equals,
-    "===": hard_equals,
-    "!=": lambda a, b: not soft_equals(a, b),
-    "!==": lambda a, b: not hard_equals(a, b),
-    ">": lambda a, b: less(b, a),
-    ">=": lambda a, b: less(b, a) or soft_equals(a, b),
-    "<": less,
-    "<=": less_or_equal,
-    "!": lambda a: not a,
+    "==": lambda a, b: auto_unbox(list(np.equal(np.array(to_list(a),dtype=object),b))),
+    "===": lambda a, b: auto_unbox(list(np.char.equal(check_type(to_list(a)),check_type(b)) & np.equal(np.array(to_list(a),dtype=object),b))),
+    "!=": lambda a, b: auto_unbox(list(np.negative(np.equal(np.array(to_list(a),dtype=object),b)))),
+    "!==": lambda a, b: auto_unbox(list(np.negative(np.char.equal(check_type(to_list(a)),check_type(b)) & np.equal(np.array(to_list(a),dtype=object),b)))),
+    ">": lambda a, b: auto_unbox(list(np.greater(np.array(to_list(a),dtype=object),b))),
+    ">=": lambda a, b: auto_unbox(list(np.greater_equal(np.array(to_list(a),dtype=object),b))),
+    "<": lambda a, b: auto_unbox(list(np.lower(np.array(to_list(a),dtype=object),b))),
+    "<=": lambda a, b: auto_unbox(list(np.lower_equal(np.array(to_list(a),dtype=object),b))),
+    "!": lambda a: auto_unbox(list(np.negative(np.array(to_list(a),dtype=object)))),
     "!!": bool,
-    "%": lambda a, b: a % b,
+    "%": lambda a, b: auto_unbox(list(np.mod(np.array(to_list(a),dtype=object),b))),
     "and": lambda *args: reduce(lambda total, arg: total and arg, args, True),
     "or": lambda *args: reduce(lambda total, arg: total or arg, args, False),
     "?:": lambda a, b, c: b if a else c,
     "if": if_,
     "log": lambda a: logger.info(a) or a,
-    "in": lambda a, b: auto_unbox(list(np.isin(to_list(a),b))), #a in b if "__contains__" in dir(b) else False,
+    "in": lambda a, b: auto_unbox(list(np.isin(to_list(a),b))),
     "cat": lambda *args: "".join(str(arg) for arg in args),
     "+": plus,
     "*": lambda *args: reduce(lambda total, arg: total * float(arg), args, 1),

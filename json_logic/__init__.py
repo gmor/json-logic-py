@@ -186,6 +186,7 @@ operations = {
 def jsonLogic(tests, data=None):
     """Executes the json-logic with given data."""
     # You've recursed to a primitive, stop!
+    print(tests)
     if tests is None or not isinstance(tests, dict):
         return tests
 
@@ -211,8 +212,6 @@ def jsonLogic(tests, data=None):
 
     if operator not in operations:
         raise ValueError("Unrecognized operation %s" % operator)
-    
-    print(values)
     
     try:
         if isinstance(*values, list):

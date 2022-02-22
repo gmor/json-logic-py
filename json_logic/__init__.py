@@ -238,4 +238,6 @@ def jsonLogic(tests, data=None):
     except:
         pass
     
+    print(*values)
+    
     return operations[operator](*values)

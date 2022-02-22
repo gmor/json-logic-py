@@ -158,6 +158,12 @@ def auto_unbox(l):
     else:
         return l
 
+def to_list(e):
+    if isinstance(e,list):
+        return e
+    else: 
+        return [e]
+    
 operations = {
     "==": soft_equals,
     "===": hard_equals,
@@ -175,7 +181,7 @@ operations = {
     "?:": lambda a, b, c: b if a else c,
     "if": if_,
     "log": lambda a: logger.info(a) or a,
-    "in": lambda a, b: auto_unbox(list(np.isin(a,b))), #a in b if "__contains__" in dir(b) else False,
+    "in": lambda a, b: auto_unbox(list(np.isin(to_list(a),b))), #a in b if "__contains__" in dir(b) else False,
     "cat": lambda *args: "".join(str(arg) for arg in args),
     "+": plus,
     "*": lambda *args: reduce(lambda total, arg: total * float(arg), args, 1),

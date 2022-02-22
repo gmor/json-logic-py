@@ -169,7 +169,13 @@ def check_type(e):
         return [str(type(a)) for a in e]
     else: 
         return str(type(e))
+
+def filter_(data, args):
+    print(data)
+    print(args)
+    return True
     
+
 operations = {
     "==": lambda a, b: auto_unbox(list(np.equal(np.array(to_list(a),dtype=object),b))),
     "===": lambda a, b: auto_unbox(list(np.char.equal(check_type(to_list(a)),check_type(b)) & np.equal(np.array(to_list(a),dtype=object),b))),
@@ -198,14 +204,13 @@ operations = {
     "merge": merge,
     "any": lambda *args: np.any(args),
     "all": lambda *args: np.all(args),
-    "count": lambda *args: sum(1 if a else 0 for a in args),
+    "count": lambda *args: sum(1 if a else 0 for a in args)
 }
 
 
 def jsonLogic(tests, data=None):
     """Executes the json-logic with given data."""
     # You've recursed to a primitive, stop!
-    print(tests)
     if tests is None or not isinstance(tests, dict):
         return tests
 
@@ -224,6 +229,8 @@ def jsonLogic(tests, data=None):
 
     if operator == 'var':
         return get_var(data, *values)
+    if operator == 'filter':
+        return filter_(data, *values)
     if operator == 'missing':
         return missing(data, *values)
     if operator == 'missing_some':
@@ -237,7 +244,5 @@ def jsonLogic(tests, data=None):
             values = np.concatenate(values)
     except:
         pass
-    
-    print(values)
     
     return operations[operator](*values)
